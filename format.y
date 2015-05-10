@@ -5,7 +5,7 @@ extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
 void
-yyerror(YYLTYPE *llocp, const char *buf, long length, const char *msg);
+yyerror(char const *msg);
 %}
 
 %union {
@@ -15,9 +15,9 @@ yyerror(YYLTYPE *llocp, const char *buf, long length, const char *msg);
 }
 
 %require "3.0"
-%define api.pure full
 %locations
 %defines
+%pure-parser
 
 %token <number> NUMBER;
 %token <string> STRING;
@@ -35,7 +35,7 @@ expr:
   ;
 
 atom:
-  '(' IDENT { printf("calling %s\n", $2); } arguments ')'
+  '(' IDENT arguments ')' { printf("calling %s\n", $2); }
   ;
 
 argument:
@@ -52,6 +52,6 @@ arguments:
 %%
 
 void
-yyerror(YYLTYPE *llocp, const char *buf, long length, const char *msg) {
-  printf("guhwtf %s", msg);
+yyerror(char const *msg) {
+  printf("guhwtf %s\n", msg);
 }
