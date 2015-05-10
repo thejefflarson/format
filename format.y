@@ -4,8 +4,6 @@
 extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
-void
-yyerror(char const *msg);
 %}
 
 %union {
@@ -14,20 +12,28 @@ yyerror(char const *msg);
   char *ident;
 }
 
+%{
+void
+yyerror(struct YYLTYPE *locp, void *scanner, char const *msg) {
+  printf("guhwtf %s\n", msg);
+}
+%}
+
 %require "3.0"
 %locations
 %defines
-%pure-parser
+%define api.pure full
+%lex-param {void * scanner}
+%parse-param {void * scanner}
+%error-verbose
 
-%token <number> NUMBER;
-%token <string> STRING;
-%token <ident>  IDENT;
+%token <number> NUMBER "number";
+%token <string> STRING "string";
+%token <ident>  IDENT "indentifier";
+%token ERROR "character";
+%token END 0 "end of file";
 
 %%
-
-format:
-  expr
-  ;
 
 expr:
   expr atom
@@ -49,9 +55,3 @@ arguments:
   | argument
   ;
 
-%%
-
-void
-yyerror(char const *msg) {
-  printf("guhwtf %s\n", msg);
-}

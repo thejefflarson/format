@@ -2,7 +2,11 @@
 #include "format.tab.h"
 %}
 
-%option noyywrap bison-bridge bison-locations batch
+%option noyywrap
+%option bison-bridge
+%option bison-locations
+%option reentrant
+%option yylineno
 
 %%
 [0-9]{1,64} {
@@ -26,14 +30,22 @@
 }
 
 [ \t\n]+
+
+. {
+  return ERROR;
+}
 %%
 
 #include <stdio.h>
 
 int
 main(){
-  yyin = stdin;
+  void *scanner;
+  yylex_init(&scanner);
+
   do {
-    yyparse();
-  } while (!feof(yyin));
+    if(yyparse(scanner)) break;
+  } while (!feof(stdin));
+
+  yylex_destroy(scanner);
 }
