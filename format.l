@@ -6,17 +6,18 @@
 
 %%
 [0-9]{1,64} {
-  yyval.ival = strtoull(yytext, yytext + yyleng, 10);
+  char *end = yytext + yyleng;
+  yylval.number = strtoull(yytext, &end, 10);
   return NUMBER;
 }
 
 [a-z]+ {
-  yyval.ident = strndup(yytext, yyleng);
-  return INDENT;
+  yylval.ident = strndup(yytext, yyleng);
+  return IDENT;
 }
 
 \"(\\\\.|[^\"])*\" {
-  yyval.string = strndup(yytext, yyleng);
+  yylval.string = strndup(yytext, yyleng);
   return STRING;
 }
 

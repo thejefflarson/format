@@ -4,6 +4,8 @@
 extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
+void
+yyerror(YYLTYPE *llocp, const char *buf, long length, const char *msg);
 %}
 
 %union {
@@ -12,6 +14,8 @@ extern FILE *yyin;
   char *ident;
 }
 
+%require "3.0"
+%define api.pure full
 %locations
 %defines
 
@@ -48,6 +52,6 @@ arguments:
 %%
 
 void
-yyerror(const char *s) {
-  printf("guhwtf %s", s);
+yyerror(YYLTYPE *llocp, const char *buf, long length, const char *msg) {
+  printf("guhwtf %s", msg);
 }
