@@ -18,10 +18,9 @@ yyerror(struct YYLTYPE *locp, void *scanner, char const *msg) {
 }
 %}
 
-%require "3.0"
+%pure-parser
 %locations
 %defines
-%define api.pure full
 %lex-param {void * scanner}
 %parse-param {void * scanner}
 %error-verbose
