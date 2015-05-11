@@ -3,7 +3,6 @@
 #include <stdint.h>
 extern int yylex();
 extern int yyparse();
-extern FILE *yyin;
 %}
 
 %union {
