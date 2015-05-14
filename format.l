@@ -1,4 +1,5 @@
 %{
+#include "format.h"
 #include "format.tab.h"
 %}
 
@@ -40,12 +41,13 @@
 
 int
 main(){
-  void *scanner;
-  yylex_init(&scanner);
+  format_ctx_t ctx;
+  yydebug = 1;
+  yylex_init(ctx.scanner);
 
   do {
-    if(yyparse(scanner)) break;
+    if(yyparse(&ctx)) break;
   } while (!feof(stdin));
 
-  yylex_destroy(scanner);
+  yylex_destroy(ctx.scanner);
 }

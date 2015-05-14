@@ -1,11 +1,11 @@
-CFLAGS = -Wall -Wextra -pedantic
+CFLAGS = -g -Wall -Wextra -pedantic
 
 all: format
 
 format.tab.c format.tab.h: format.y
-	bison -r all $<
+	bison -r all -t $<
 
-lex.yy.c: format.l format.tab.c format.tab.h
+lex.yy.c: format.l format.tab.c format.tab.h format.h
 	flex $<
 
 format: format.tab.c lex.yy.c

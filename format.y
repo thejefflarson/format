@@ -1,8 +1,8 @@
 %{
 #include <stdio.h>
 #include <stdint.h>
-extern int yylex();
-extern int yyparse();
+#include "format.h"
+
 %}
 
 %union {
@@ -12,8 +12,13 @@ extern int yyparse();
 }
 
 %{
+int
+yylex(YYSTYPE* lvalp, YYLTYPE* llocp, void *scanner);
+
+#define scanner ctx->scanner
+
 void
-yyerror(struct YYLTYPE *locp, void *scanner, char const *msg) {
+yyerror(struct YYLTYPE *locp, format_ctx_t *ctx, char const *msg) {
   printf("guhwtf %s\n", msg);
 }
 %}
@@ -21,8 +26,8 @@ yyerror(struct YYLTYPE *locp, void *scanner, char const *msg) {
 %pure-parser
 %locations
 %defines
-%lex-param {void * scanner}
-%parse-param {void * scanner}
+%lex-param {void *scanner}
+%parse-param {format_ctx_t *ctx}
 %error-verbose
 
 %token <number> NUMBER "number";
