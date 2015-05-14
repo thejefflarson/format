@@ -15,10 +15,8 @@
 int
 yylex(YYSTYPE* lvalp, YYLTYPE* llocp, void *scanner);
 
-#define scanner ctx->scanner
-
 void
-yyerror(struct YYLTYPE *locp, format_ctx_t *ctx, char const *msg) {
+yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg) {
   printf("guhwtf %s\n", msg);
 }
 %}
@@ -27,6 +25,7 @@ yyerror(struct YYLTYPE *locp, format_ctx_t *ctx, char const *msg) {
 %locations
 %defines
 %lex-param {void *scanner}
+%parse-param {void *scanner}
 %parse-param {format_ctx_t *ctx}
 %error-verbose
 
@@ -44,7 +43,7 @@ expr:
   ;
 
 atom:
-  '(' IDENT arguments ')' { printf("calling %s\n", $2); }
+  '(' IDENT arguments ')' { ctx->yo++; printf("calling %s %i\n", $2, ctx->yo); }
   ;
 
 argument:

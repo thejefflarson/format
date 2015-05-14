@@ -41,13 +41,13 @@
 
 int
 main(){
+  void *scanner = NULL;
+  yylex_init(&scanner);
   format_ctx_t ctx;
-  yydebug = 1;
-  yylex_init(ctx.scanner);
-
+  ctx.yo = 0;
   do {
-    if(yyparse(&ctx)) break;
+    if(yyparse(scanner, &ctx)) break;
   } while (!feof(stdin));
 
-  yylex_destroy(ctx.scanner);
+  yylex_destroy(scanner);
 }

@@ -3,7 +3,7 @@ CFLAGS = -g -Wall -Wextra -pedantic
 all: format
 
 format.tab.c format.tab.h: format.y
-	bison -r all -t $<
+	bison -r all $<
 
 lex.yy.c: format.l format.tab.c format.tab.h format.h
 	flex $<
