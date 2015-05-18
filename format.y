@@ -37,12 +37,12 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %%
 
 expr:
-  expr atom
-  | atom
+  expr atom { printf("expression\n"); }
+  | { printf("atom\n"); }
   ;
 
 atom:
-  '(' IDENT arguments ')' { ctx->yo++; printf("calling %s %i\n", $2, ctx->yo); }
+  '(' IDENT arguments ')' { ctx->yo++; printf("atom %s %i\n", $2, ctx->yo); }
   ;
 
 argument:
@@ -52,7 +52,7 @@ argument:
   ;
 
 arguments:
-  arguments argument
-  | argument
+  arguments argument { printf("argument\n"); }
+  | { printf("arguments\n"); }
   ;
 
