@@ -43,6 +43,7 @@ int
 main(){
   void *scanner = NULL;
   yylex_init(&scanner);
+  
   format_ctx_t ctx;
   ctx.yo = 0;
   do {

@@ -33,16 +33,18 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %token <ident>  IDENT "indentifier";
 %token ERROR "character";
 %token END 0 "end of file";
-
+%start format
 %%
 
+format: expr { printf("format\n"); };
+
 expr:
-  expr atom { printf("expression\n"); }
-  | { printf("atom\n"); }
+  expr atom
+  | atom { printf("atom\n");}
   ;
 
-atom:
-  '(' IDENT arguments ')' { ctx->yo++; printf("atom %s %i\n", $2, ctx->yo); }
+atom: 
+  '(' IDENT arguments ')' { ctx->yo++; printf("calling %s %i\n", $IDENT, ctx->yo); }
   ;
 
 argument:
@@ -51,8 +53,8 @@ argument:
   | atom
   ;
 
-arguments:
-  arguments argument { printf("argument\n"); }
-  | { printf("arguments\n"); }
+arguments: 
+  arguments argument { printf("argument list\n"); }
+  | argument { printf("argument\n"); }
   ;
 
