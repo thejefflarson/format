@@ -1,0 +1,3 @@
+[submodule "deps/ht"]
+	path = deps/ht
+	url = git@github.com:thejefflarson/ht
