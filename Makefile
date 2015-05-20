@@ -1,17 +1,20 @@
-CFLAGS = -g -Wall -Wextra -pedantic -std=c99
+CFLAGS = -g -Wall -Wextra -pedantic -std=c99 -I./build/ -I./src/ -I./include/
 
 all: format
 
-format.tab.c format.tab.h: format.y
-	bison -r all $<
+build:
+	mkdir build
 
-lex.yy.c: format.l format.tab.c format.tab.h format.h
-	flex $<
+build/format.tab.c build/format.tab.h: src/format.y build
+	bison -r all $< -o $@
 
-format: format.tab.c lex.yy.c
+build/lex.yy.c: src/format.l build/format.tab.c build/format.tab.h include/format.h build
+	flex -o $@ $<
+
+format: build/format.tab.c build/lex.yy.c
 	$(CC) $^ $(CFLAGS) -o $@
 
 clean:
-	rm format.tab.c format.tab.h format lex.yy.c
+	rm -rf build
 
 .PHONY: clean
