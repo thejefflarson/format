@@ -4,3 +4,4 @@ format.tab.c
 format.tab.h
 lex.yy.c
 build
+.vagrant

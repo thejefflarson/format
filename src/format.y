@@ -5,7 +5,9 @@
 %}
 
 %union {
-  uint64_t number;
+  uint8_t  u8;
+  uint16_t u16;
+  uint32_t u32;
   char *string;
   char *ident;
 }
@@ -28,7 +30,9 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %parse-param {format_ctx_t *ctx}
 %error-verbose
 
-%token <number> NUMBER "number";
+%token <u8> U8  "8-bit number";
+%token <u16> U16 "16-bit number";
+%token <u32> U32 "32-bit number";
 %token <string> STRING "string";
 %token <ident>  IDENT "indentifier";
 %token ERROR "character";
@@ -43,17 +47,19 @@ expr:
   | atom { printf("atom\n");}
   ;
 
-atom: 
-  '(' IDENT arguments ')' { ctx->yo++; printf("calling %s %i\n", $IDENT, ctx->yo); }
+atom:
+  '(' IDENT arguments ')' { ctx->yo++; printf("calling %s %i\n", $IDENT, ctx->yo); free($IDENT); }
   ;
 
 argument:
-  NUMBER   { printf("number %llu\n", $1); }
-  | STRING { printf("string %s\n", $1); }
+  U8       { printf("u8 %i\n", $1); }
+  | U16    { printf("u16 %i\n", $1); }
+  | U32    { printf("u32 %i\n", $1); }
+  | STRING { printf("string %s\n", $1); free($1); }
   | atom
   ;
 
-arguments: 
+arguments:
   arguments argument { printf("argument list\n"); }
   | argument { printf("argument\n"); }
   ;
