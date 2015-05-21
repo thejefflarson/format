@@ -1,11 +1,11 @@
 #ifndef FORMAT_H
 #define FORMAT_H
-
+#include <stdint.h>
 // arena
 typedef struct format_reg {
-  void *region;
-  void *start;
-  void *limit;
+  uint8_t *region;
+  uint8_t *start;
+  uint8_t *limit;
   struct format_reg *next;
 } format_reg_t;
 
