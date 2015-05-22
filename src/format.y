@@ -40,7 +40,7 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %start format
 %%
 
-format: expr { printf("format\n"); };
+format: expr END { printf("format\n"); };
 
 expr:
   expr atom

@@ -48,9 +48,7 @@
   return yytext[0];
 }
 
-[ \t\n]+
-
-. {
+(.|\n) {
   return ERROR;
 }
 %%
