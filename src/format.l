@@ -17,7 +17,6 @@
 %option bison-bridge
 %option bison-locations
 %option reentrant
-%option yylineno
 
 %%
 ~ {
@@ -35,7 +34,7 @@
 }
 
 [a-z]+ {
-  yylval->ident = strndup(yytext, yyleng);
+  yylval->string = strndup(yytext, yyleng);
   return IDENT;
 }
 
