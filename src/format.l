@@ -2,13 +2,12 @@
 #include "format.h"
 #include "format.tab.h"
 #include <arpa/inet.h>
+#include <inttypes.h>
 #define parsenum(size, conv) \
   do { \
-    uint##size##_t val; \
-    uint##size##_t *p = &val; \
-    for(size_t i = 0; i < sizeof(uint##size##_t); i++, ++yyleng) \
-      p[i] = input(yyscanner); \
-    yylval->u##size = ntoh##conv(val); \
+    yylval->u##size = 0; \
+    for(int i = (size / 8) - 1; i >= 0; i--, ++yyleng) \
+      yylval->u##size |= input(yyscanner) << (i * 8); \
     return U##size; \
   } while(0);
 %}
@@ -38,8 +37,14 @@
   return IDENT;
 }
 
-\"(\\\\.|[^\"])*\" {
-  yylval->string = strndup(yytext, yyleng);
+` {
+  uint16_t val = ((uint8_t)input(yyscanner) << 8) | (uint8_t)input(yyscanner);
+  yyleng += 2;
+
+  yylval->string = calloc(val, sizeof(uint8_t));
+  for(int i = 0; i < val; i++, ++yyleng)
+    yylval->string[i] = input(yyscanner);
+
   return STRING;
 }
 
