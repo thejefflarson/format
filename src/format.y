@@ -48,8 +48,8 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 format: expr END { printf("format\n"); };
 
 expr:
-  expr atom
-  | { printf("atom\n");}
+  { printf("expression\n"); }
+  | expr atom { printf("atom\n"); }
   ;
 
 atom:
@@ -65,7 +65,7 @@ argument:
   ;
 
 arguments:
-  arguments argument { printf("argument list\n"); }
-  | { printf("argument\n"); }
+  { printf("arguments\n"); }
+  | arguments argument { printf("argument\n"); }
   ;
 
