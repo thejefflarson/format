@@ -58,17 +58,15 @@
 %%
 
 #include <stdio.h>
+#include "format.c"
 
 int
-main(){
-  void *scanner = NULL;
-  yylex_init(&scanner);
+format_parse(format_ctx_t *ctx, uint8_t *buf, size_t length) {
+  ctx->yo = 0;
 
-  format_ctx_t ctx;
-  ctx.yo = 0;
   do {
-    if(yyparse(scanner, &ctx)) break;
+    if(yyparse(ctx->scanner, ctx)) break;
   } while (!feof(stdin));
 
-  yylex_destroy(scanner);
+  return 0;
 }

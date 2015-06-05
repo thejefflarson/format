@@ -8,10 +8,10 @@ build:
 build/format.tab.c build/format.tab.h: src/format.y build
 	bison -r all $< -o $@
 
-build/lex.yy.c: src/format.l build/format.tab.c build/format.tab.h include/format.h build
+build/lex.yy.c: src/format.l build/format.tab.c build/format.tab.h src/format.c include/format.h build
 	flex -o $@ $<
 
-build/format: build/format.tab.c build/lex.yy.c
+build/format: test/test.c build/format.tab.c build/lex.yy.c
 	$(CC) $^ $(CFLAGS) -o $@
 
 clean:
