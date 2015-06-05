@@ -1,6 +1,6 @@
 int
 format_init(format_ctx_t *ctx) {
-  return yylex_init(&(ctx->scanner));
+  return yylex_init(&ctx->scanner);
 }
 
 int
