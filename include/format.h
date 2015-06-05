@@ -4,10 +4,7 @@
 #include <stdlib.h>
 
 
-typedef struct format_ctx {
-  int yo;
-  void *scanner;
-} format_ctx_t;
+typedef struct format_ctx format_ctx_t;
 
 int
 format_init(format_ctx_t *ctx);
