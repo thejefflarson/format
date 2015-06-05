@@ -33,7 +33,9 @@
 }
 
 [a-z]+ {
-  yylval->string = strndup(yytext, yyleng);
+  yylval->string = arena_malloc(ctx->arena, yyleng);
+  memcpy(yylval->string, yytext, yyleng - 1);
+  yylval->string[yyleng] = '\0';
   return IDENT;
 }
 
@@ -62,8 +64,6 @@
 
 int
 format_parse(format_ctx_t *ctx, uint8_t *buf, size_t length) {
-  ctx->yo = 0;
-
   do {
     if(yyparse(ctx->scanner, ctx)) break;
   } while (!feof(stdin));

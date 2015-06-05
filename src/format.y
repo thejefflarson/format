@@ -41,7 +41,6 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %token ERROR "character"
 %token END 0 "end of file"
 
-
 %start format
 %%
 

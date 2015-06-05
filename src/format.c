@@ -2,7 +2,6 @@
 #include "ht.h"
 
 typedef struct format_ctx {
-  int yo;
   void *scanner;
   ht_t *func_table;
   arena_t *arena;
