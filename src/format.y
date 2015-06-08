@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "format.h"
+#include "arena.h"
+#include "ht.h"
 %}
 
 %union {
