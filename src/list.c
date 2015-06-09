@@ -18,3 +18,14 @@ list_new(arena_t *arena) {
   return list;
 }
 
+void
+list_push(list_t *list, void *item) {
+  list_node_t *node = (list_node_t *) arena_malloc(list->arena, sizeof(list_node_t));
+  node->data = item;
+  if(list->head == NULL) {
+    list->head = list->tail = node;
+  } else {
+    list->tail->next = node;
+  }
+}
+
