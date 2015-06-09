@@ -2,9 +2,14 @@
 #define FORMAT_H
 #include <stdint.h>
 #include <stdlib.h>
+#include "ht.h"
+#include "arena.h"
 
-
-typedef struct format_ctx format_ctx_t;
+typedef struct format_ctx {
+  void *scanner;
+  ht_t *func_table;
+  arena_t *arena;
+} format_ctx_t;
 
 int
 format_init(format_ctx_t *ctx);

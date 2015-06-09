@@ -1,18 +1,12 @@
 #include "arena.h"
+#include "format.h"
 #include "ht.h"
-
-typedef struct format_ctx {
-  void *scanner;
-  ht_t *func_table;
-  arena_t *arena;
-} format_ctx_t;
-
 
 int
 format_init(format_ctx_t *ctx) {
   ctx->arena      = arena_create();
   ctx->func_table = ht_new(256, 32);
-  return yylex_init(&ctx->scanner);
+  return yylex_init_extra(ctx, &ctx->scanner);
 }
 
 int

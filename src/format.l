@@ -16,6 +16,7 @@
 %option bison-bridge
 %option bison-locations
 %option reentrant
+%option extra-type="format_ctx_t *"
 
 %%
 ~ {
@@ -33,7 +34,7 @@
 }
 
 [a-z]+ {
-  yylval->string = arena_malloc(ctx->arena, yyleng);
+  yylval->string = arena_malloc(yyextra->arena, yyleng);
   memcpy(yylval->string, yytext, yyleng - 1);
   yylval->string[yyleng] = '\0';
   return IDENT;

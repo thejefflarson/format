@@ -1,10 +1,15 @@
 %{
 #include <stdio.h>
 #include <stdint.h>
-#include "format.h"
+
 #include "arena.h"
+#include "format.h"
 #include "ht.h"
 %}
+
+%code requires {
+  #include "list.h"
+}
 
 %union {
   uint8_t  u8;
@@ -54,9 +59,9 @@ format: atom END;
 
 atom:
   '(' IDENT arguments ')' {
-    format_func_t *fn = ht_get(ctx->ht, $IDENT);
-    // check for error
-    $$ = fn(ctx, $arguments);
+    // format_func_t *fn = ht_get(ctx->ht, $IDENT);
+    // // check for error
+    // $$ = fn(ctx, $arguments);
   }
   ;
 
@@ -69,9 +74,7 @@ argument:
   ;
 
 arguments: {
-    list_t *list = arena_malloc(sizeof(list_t));
-    // check for error
-    list_init(list);
+    list_t *list = list_new(ctx->arena);
     $$ = list;
   }
   | arguments argument {
