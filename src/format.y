@@ -17,6 +17,7 @@
   uint32_t u32;
   char *string;
   list_t *arguments;
+  void *user_data;
 }
 
 %{
@@ -50,7 +51,7 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 
 %type <arguments> arguments;
 %type <arguments> argument;
-%type <arguments> atom;
+%type <user_data> atom;
 
 %start format
 %%
