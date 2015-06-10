@@ -32,7 +32,6 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 
 %require "3.0"
 %define api.pure full
-// %define api.push-pull push
 %locations
 %defines
 %debug
