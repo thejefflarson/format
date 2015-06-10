@@ -66,10 +66,10 @@ atom:
   ;
 
 argument:
-  U8       { printf("u8 %i\n", $1); }
-  | U16    { printf("u16 %i\n", $1); }
-  | U32    { printf("u32 %i\n", $1); }
-  | STRING { printf("string %s\n", $1); }
+  U8
+  | U16
+  | U32
+  | STRING
   | atom
   ;
 
