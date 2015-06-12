@@ -34,9 +34,9 @@
 }
 
 [a-z]+ {
-  yylval->string = arena_malloc(yyextra->arena, yyleng);
-  memcpy(yylval->string, yytext, yyleng - 1);
-  yylval->string[yyleng] = '\0';
+  yylval->ident = arena_malloc(yyextra->arena, yyleng);
+  memcpy(yylval->ident, yytext, yyleng - 1);
+  yylval->ident[yyleng] = '\0';
   return IDENT;
 }
 

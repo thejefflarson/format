@@ -12,10 +12,8 @@
 }
 
 %union {
-  uint8_t  u8;
-  uint16_t u16;
-  uint32_t u32;
-  char *string;
+  format_item_t *item;
+  char *ident;
   list_t *arguments;
   void *user_data;
 }
@@ -40,11 +38,11 @@ yyerror(struct YYLTYPE *locp, void *scanner, format_ctx_t *ctx, char const *msg)
 %parse-param {format_ctx_t *ctx}
 %error-verbose
 
-%token <u8> U8 "8-bit number"
-%token <u16> U16 "16-bit number"
-%token <u32> U32 "32-bit number"
-%token <string> STRING "string"
-%token <string> IDENT "indentifier"
+%token <item> U8 "8-bit number"
+%token <item> U16 "16-bit number"
+%token <item> U32 "32-bit number"
+%token <item> STRING "string"
+%token <ident> IDENT "indentifier"
 %token ERROR "character"
 %token END 0 "end of file"
 
