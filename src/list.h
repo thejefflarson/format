@@ -11,6 +11,7 @@ typedef struct list_node {
 typedef struct list {
   list_node_t *head;
   list_node_t *tail;
+  uint32_t length;
   arena_t *arena;
 } list_t;
 
